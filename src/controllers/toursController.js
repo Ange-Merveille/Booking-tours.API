@@ -4,6 +4,7 @@ class ToursController{
 
     // create tour in db
     static async createTour(req,res){
+        req.body.user= req.user._id;
         const Tours = await ToursInfos.create(req.body);
         if(!Tours){
        return res.status(404).json({error:"tour not registered"})

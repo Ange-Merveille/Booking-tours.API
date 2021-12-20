@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { nextTick } from 'process';
 const tourSchema = new mongoose.Schema(  // Scheam is a format or a structure of our model, it will generate our model in db
    
     {
@@ -11,6 +12,11 @@ const tourSchema = new mongoose.Schema(  // Scheam is a format or a structure of
             dueDate: String,
             phone: String,
             price: String,
+            user:{
+                type:mongoose.Schema.ObjectId,
+                ref:'User',
+
+            },
             images:[
             {
                 type:String,
@@ -24,6 +30,13 @@ const tourSchema = new mongoose.Schema(  // Scheam is a format or a structure of
             timestamps: true,  // means it has been stored
         }
         
+);
+tourSchema.pre(/^find/,function (next){
+    this.populate({path:"user",
+    select:"lastName email address"});
+    next()
+} 
+    
 )
 
 

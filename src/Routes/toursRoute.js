@@ -1,10 +1,12 @@
 import express from 'express';
 import toursController from '../controllers/toursController';
 import Validator from '../middlewares/validator';
-
+import verifyToken from "../middlewares/verifyToken";
+import verifyAccess from "../middlewares/verifyAccess"
 
 const ToursRouter =express.Router();
-ToursRouter.post('/create',
+ToursRouter.post('/create',verifyToken,
+verifyAccess("admin"),
 Validator.newTourRules(),
 Validator.ValidatorInput,
 toursController.createTour);

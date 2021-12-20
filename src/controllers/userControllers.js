@@ -1,9 +1,11 @@
 import UserInfos from "../model/user";
 import bcrypt from "bcrypt";
+import tokenAuth from "../helpers/tokenAuth";
 class UserController {
 
     // create user in db
     static async createUser(req, res) {
+        
         const hashPassword = bcrypt.hashSync(req.body.password, 10)
         req.body.password = hashPassword;
         const user = await UserInfos.create(req.body);
@@ -54,10 +56,13 @@ class UserController {
             return res.status(404).json({ error: "user not found!kindly register first" })
         }
         if (bcrypt.compareSync(req.body.password, user.password)) {
-            return res.status(200).json({ message: "successfully loged in" });
+            user.password=null;
+            const token = TokenAuth.tokenGenerator({user:user});
+            return res.status(200).json({ message: "successfully loged in",token:token});
 
         }
         return res.status(400).json({ error: "password is wrong" });
     }
 }
+import TokenAuth from "../helpers/tokenAuth";
 export default UserController;
