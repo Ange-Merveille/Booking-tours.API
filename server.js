@@ -2,8 +2,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv"
 import mongoose  from "mongoose";
-import userRouter from "./src/routes/userRoutes";
-import ToursRouter from "./src/routes/toursRoute"
+import userRouter from "./src/Routes/userRoutes";
+import ToursRouter from "./src/Routes/toursRoute"
 
 
 dotenv.config("./.env");
