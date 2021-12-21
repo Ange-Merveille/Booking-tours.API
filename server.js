@@ -24,9 +24,9 @@ const dbUrl=process.env.DATABASEURL;
 
 mongoose.connect(dbUrl).then(()=> console.log("Database connected successfully"));
 
-
-app.listen(3030,()=>{
-    console.log(`Server is running on Port 3030`);
+const port = process.env.PORT;
+app.listen(port,()=>{
+    console.log(`Server is running on Port ${port}`);
 })
 
 export default app;
